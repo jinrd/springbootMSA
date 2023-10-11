@@ -1,0 +1,30 @@
+server:
+  port: 8000
+  
+  
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+      
+      
+spring:
+  application:
+    name: apigateway-service
+
+  cloud:
+    gateway:
+      routes:
+      - id: first-service
+        uri: http://localhost:8081/
+        predicates:
+        - Path=/first-service/**
+      - id: second-service
+        uri: http://localhost:8082/
+        predicates:
+        - Path=/second-service/**
+    
+    # http://localhost:8081/first-service/ <- 로 요청이 되기 때문에 first service 의 controller 매핑을 수정해준다.
+    # sercond service 같이 수정해준다.
