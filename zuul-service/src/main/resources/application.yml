@@ -1,0 +1,17 @@
+server:
+  port: 8000
+  
+spring:
+  application:
+    name: my-zuul-service
+    
+# 우리가 만들었던 마이크로 서비스로 가는 방향성을 결정하게 되었다
+# 이게 주요 서비스가 해주는 가장 기본적인 Gateway 라우팅의 역할을 하고 있다.
+zuul:
+  routes:
+    first-service:
+      path: /first-service/**
+      url: http://localhost:8081
+    second-service:
+      path: /second-service/**
+      url: http://localhost:8082
