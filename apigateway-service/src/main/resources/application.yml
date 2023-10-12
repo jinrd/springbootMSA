@@ -16,21 +16,29 @@ spring:
 
   cloud:
     gateway:
+      default-filters:
+      - name: GlobalFilter # 글로벌 필터 이름
+        args: # GlobalFilter 에 정의한 파라미터
+          baseMessage: Spring Cloud Gateway Global Filter
+          preLogger: true
+          postLogger: true
       routes:
       - id: first-service
         uri: http://localhost:8081/
         predicates:
         - Path=/first-service/**
         filters:
-        - AddRequestHeader=first-request, first-request-header2
-        - AddResponseHeader=first-response, first-response-header2
+#        - AddRequestHeader=first-request, first-request-header2
+#        - AddResponseHeader=first-response, first-response-header2
+         - CustomFilter
       - id: second-service
         uri: http://localhost:8082/
         predicates:
         - Path=/second-service/**
         filters:
-        - AddRequestHeader=second-request, second-request-header2
-        - AddResponseHeader=second-response, second=response-header2
+#        - AddRequestHeader=second-request, second-request-header2
+#        - AddResponseHeader=second-response, second=response-header2
+        - CustomFilter
     
     # http://localhost:8081/first-service/ <- 로 요청이 되기 때문에 first service 의 controller 매핑을 수정해준다.
     # sercond service 같이 수정해준다.
