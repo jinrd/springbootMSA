@@ -38,7 +38,12 @@ spring:
         filters:
 #        - AddRequestHeader=second-request, second-request-header2
 #        - AddResponseHeader=second-response, second=response-header2
-        - CustomFilter
+        - name: CustomFilter # 다수의 필터 사용시 name 필
+        - name: LoggingFilter
+          args:
+            baseMessage: Spring Cloud Gateway Logging Filter
+            preLogger: true
+            postLogger: true
     
     # http://localhost:8081/first-service/ <- 로 요청이 되기 때문에 first service 의 controller 매핑을 수정해준다.
     # sercond service 같이 수정해준다.
